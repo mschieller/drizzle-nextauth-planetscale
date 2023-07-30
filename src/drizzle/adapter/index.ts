@@ -65,7 +65,6 @@ export const DrizzleAdapter = (
             .from(s.user)
             .where(eq(s.user.id, id))
             .then((res) => res[0]);
-      console.log('getUser', user)
       return user ?? null;
     },
 
@@ -77,7 +76,6 @@ export const DrizzleAdapter = (
             .from(s.user)
             .where(eq(s.user.email, email))
             .then((res) => res[0]);
-            console.log('getUserByEmail', user)
       return user ?? null;
     },
 
@@ -95,7 +93,6 @@ export const DrizzleAdapter = (
             )
             .leftJoin(s.user, eq(s.account.userId, s.user.id))
             .then((res) => res[0]);
-        console.log('getUserByAccount', account)
       return account?.user ?? null;
     },
 
@@ -152,7 +149,7 @@ export const DrizzleAdapter = (
             .from(s.session)
             .where(eq(s.session.sessionToken, data.sessionToken))
             .then((res) => res[0]);
-      console.log('createSession', session)
+      console.log("createSession", session);
       return session;
     },
 
@@ -169,7 +166,6 @@ export const DrizzleAdapter = (
             .innerJoin(s.user, eq(s.user.id, s.session.userId))
             .then((res) => res[0]);
 
-            console.log('getSessionAndUser', data)
       if (!data) return null;
       const { user, ...session } = data;
       return {
@@ -192,7 +188,7 @@ export const DrizzleAdapter = (
             .from(s.session)
             .where(eq(s.session.sessionToken, data.sessionToken))
             .then((res) => res[0]);
-            console.log('updateSession', session)
+      console.log("updateSession", session);
       return session ?? null;
     },
 
@@ -215,7 +211,7 @@ export const DrizzleAdapter = (
               eq(s.verificationToken.identifier, verificationToken.identifier)
             )
             .then((res) => res[0]);
-            console.log('createVerificationToken', token)
+      console.log("createVerificationToken", token);
       return token ?? null;
     },
 
@@ -231,7 +227,7 @@ export const DrizzleAdapter = (
               eq(s.verificationToken.identifier, verificationToken.identifier)
             )
             .then((res) => res[0]);
-            console.log('useVerificationToken', token)
+      console.log("useVerificationToken", token);
       if (!token) return null;
       await db
         .delete(s.verificationToken)
